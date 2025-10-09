@@ -274,7 +274,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   'a boy reading a book and using a laptop ,Line Art');
                             });
                           } else {
-                            print('api');
+                            print('absxhjabsInstance pi');
                             print(
                                 'obj${promptController.text + selectedItem.toString()}');
                             // model.type = "";

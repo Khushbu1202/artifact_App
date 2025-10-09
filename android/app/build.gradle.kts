@@ -14,8 +14,8 @@ plugins {
             ndkVersion = "29.0.13846066"
 
             compileOptions {
-                sourceCompatibility = JavaVersion.VERSION_11
-                targetCompatibility = JavaVersion.VERSION_11
+                sourceCompatibility = JavaVersion.VERSION_21
+                targetCompatibility = JavaVersion.VERSION_21
             }
 
             // ✅ New way (replace kotlinOptions)
@@ -25,7 +25,7 @@ plugins {
 //                }
 //            }
             kotlinOptions {
-                jvmTarget = JavaVersion.VERSION_11.toString()
+                jvmTarget = JavaVersion.VERSION_21.toString()
             }
 
             defaultConfig {

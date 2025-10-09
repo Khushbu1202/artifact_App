@@ -194,7 +194,9 @@ class _CategoryScreenState extends State<CategoryScreen> {
         day_limit = data2.day_limit;
         expiry = data2.expiry;
         if (kDebugMode) {
-          print("snakmxxn======${data2.count}");
+          print("khushbu======${data2.count}");
+        }else{
+          print("khushbu-=======${data2.count}");
         }
         if (kDebugMode) {
           print("last count=======${updatecount.toString()}");

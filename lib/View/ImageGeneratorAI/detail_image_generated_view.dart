@@ -7,6 +7,7 @@ import 'package:progress_border/progress_border.dart';
 import 'package:provider/provider.dart';
 import 'package:sizer/sizer.dart';
 import '../../Provider_Data/dark_mode.dart';
+import '../../Routes/roots_name.dart';
 import '../../Utilities/app_color.dart';
 
 class DetailImageGeneratedScreen extends StatefulWidget {
@@ -194,17 +195,14 @@ class _DetailImageGeneratedScreenState
                   onTap: () {
 
 
+                    // 1. Pop the current screen (if this InkWell is on a pushed screen)
                     Navigator.of(context).pop();
-                    // Navigator.of(context).pushReplacementNamed(RootsName.bottomBar);
 
-                    // Navigator.of(context).push(MaterialPageRoute(builder: (context)=> const BottomBar()));
-                    // Navigator.of(context).pushNamedAndRemoveUntil(
-                    //   RootsName.bottomBar,
-                    //       (route) => false, // remove all previous routes
-                    // );
-                    // Navigator.of(context).pushNamed(RootsName.bottomBar);
-
-                    // Navigator.of(context).pushNamed("/bottomBar");
+                    // 2. Use 'rootNavigator: true' to navigate using the main app Navigator
+                    //    where your route 'detailImageGeneratedScreen' is most likely defined.
+                    //    We use 'pushNamed' instead of 'pushReplacementNamed' since we've already popped.
+                    Navigator.of(context, rootNavigator: true)
+                        .pushNamed(RootsName.bottomBar);
                   },
                   child: Container(
                     height: 6.h,

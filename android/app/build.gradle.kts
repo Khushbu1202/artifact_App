@@ -1,5 +1,5 @@
 //import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     id("com.android.application")
     id("kotlin-android")
@@ -9,28 +9,29 @@ plugins {
 }
 
         android {
-            namespace = "com.example.artifact"
+            namespace = "com.example.artifactapp"
             compileSdk = 36
-            ndkVersion = "29.0.13846066"
+//            ndkVersion = "29.0.13846066"
 
             compileOptions {
                 sourceCompatibility = JavaVersion.VERSION_21
                 targetCompatibility = JavaVersion.VERSION_21
             }
 
-            // ✅ New way (replace kotlinOptions)
-//            kotlin {
-//                compilerOptions {
-//                    jvmTarget.set(JvmTarget.JVM_11)
-//                }
-//            }
-            kotlinOptions {
-                jvmTarget = JavaVersion.VERSION_21.toString()
+//             ✅ New way (replace kotlinOptions)
+            kotlin {
+                compilerOptions {
+                    jvmTarget.set(JvmTarget.JVM_21)
+                }
             }
+
+//            kotlinOptions {
+//                jvmTarget = JavaVersion.VERSION_21.toString()
+//            }
 
             defaultConfig {
                 // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
-                applicationId = "com.example.artifact"
+                applicationId = "com.example.artifactapp"
                 // You can update the following values to match your application needs.
                 // For more information, see: https://flutter.dev/to/review-gradle-config.
                 minSdk = 26
@@ -39,9 +40,15 @@ plugins {
                 versionName = "1.0"
             }
             buildTypes {
+                debug {
+                    isMinifyEnabled = false
+                    isShrinkResources = false
+                    proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
+                }
                 release {
-                    // TODO: Add your own signing config for the release build.
-                    // Signing with the debug keys for now, so `flutter run --release` works.
+                    isMinifyEnabled = true
+                    isShrinkResources = true
+                    proguardFiles(getDefaultProguardFile("proguard-android-optimize.txt"), "proguard-rules.pro")
                     signingConfig = signingConfigs.getByName("debug")
                 }
             }

@@ -1,5 +1,6 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_core/firebase_core.dart';
 // import 'package:firebase_database/firebase_database.dart';
 // import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -11,6 +12,7 @@ import '../../Models/signinwithgoogle_model.dart';
 import '../../Provider_Data/dark_mode.dart';
 import '../../Utilities/app_color.dart';
 import '../Home/BottomBarScreens/Bottom_Bar.dart';
+import 'package:firebase_app_check/firebase_app_check.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -124,9 +126,9 @@ class _SplashScreenState extends State<SplashScreen> {
             Container(
               height: 31,
               width: 144,
-              margin: const EdgeInsets.only(top: 567, left: 15),
+              margin: const EdgeInsets.only(top: 600, left: 15),
               decoration: BoxDecoration(
-                color: const Color.fromRGBO(255, 40, 125, 1),
+                color: ColorX.pinkX,
                 borderRadius: BorderRadius.circular(36),
               ),
               child: Center(
@@ -141,7 +143,7 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
             ),
             Padding(
-              padding: const EdgeInsets.only(top: 619, left: 18),
+              padding: const EdgeInsets.only(top: 650, left: 18),
               child: Text(
                 "Turn your Ideas into ART",
                 style: GoogleFonts.lexendDeca(
@@ -153,19 +155,19 @@ class _SplashScreenState extends State<SplashScreen> {
             ),
             InkWell(
               onTap: () async {
-
                 signup(context);
+                await Firebase.initializeApp();
 
-                //   UserCredential? userCredential = await _signInWithGoogle();
-                // await _storeUserData(userCredential?.user);
-                // _handleSignIn(context);
+                await FirebaseAppCheck.instance.activate(
+                  androidProvider: AndroidProvider.debug,
+                );
               },
               child: Container(
                 height: 45,
                 width: double.infinity,
-                margin: const EdgeInsets.only(top: 708, left: 17, right: 17),
+                margin: const EdgeInsets.only(top: 750, left: 17, right: 17),
                 decoration: BoxDecoration(
-                  color: const Color.fromRGBO(234, 72, 220, 1),
+                  color: ColorX.pinkX,
                   borderRadius: BorderRadius.circular(100),
                 ),
                 child: Center(
@@ -238,44 +240,15 @@ class _SplashScreenState extends State<SplashScreen> {
     }
   }
 
-  // final FirebaseAuth auth = FirebaseAuth.instance;
-
-  // Future<void> signup(BuildContext context) async {
-  //   final GoogleSignIn googleSignIn = GoogleSignIn();
-  //   final GoogleSignInAccount? googleSignInAccount = await googleSignIn.signIn();
-  //   if (googleSignInAccount != null){
-  //     final GoogleSignInAuthentication googleSignInAuthentication =
-  //     await googleSignInAccount.authentication;
-  //     final AuthCredential authCredential = GoogleAuthProvider.credential(
-  //       idToken: googleSignInAuthentication.idToken,
-  //       accessToken: googleSignInAuthentication.accessToken,
-  //     );
-  //     UserCredential result = await auth.signInWithCredential(authCredential);
-  //     if (result.user != null) {
-  //       getUserDetails(
-  //           result.user!.email.toString(), result.user!.displayName.toString(),
-  //           result.user!.photoURL.toString());
-  //       // Navigator.of(context).push(MaterialPageRoute(builder: (context)=>BottomBar()));
-  //
-  //     }else{
-  //       final scaffoldMessenger = ScaffoldMessenger.of(context);
-  //       scaffoldMessenger.showSnackBar(
-  //         const SnackBar(
-  //           content: Text('Login Failed, Please try again.'),
-  //           backgroundColor: ColorX.pinkX,
-  //         ),
-  //       );
-  //     }
-  //   }
-  // }
 
   Map<String, dynamic>? data;
   var data2;
-  Future<void> getUserDetails(String email, String name, String photo) async {
+     Future<void> getUserDetails(String email, String name, String photo) async {
     // try {
     final DocumentReference userDocRef = FirebaseFirestore.instance.collection('users').doc(email);
     final DocumentSnapshot documentSnapshot = await userDocRef.get();
-    print("object------kd ${documentSnapshot.exists}");
+    print("object------kd"
+        " ${documentSnapshot.exists}");
     if (documentSnapshot.exists) {
       data = documentSnapshot.data() as Map<String, dynamic>;
       data2 = UserDetails.fromJson(data ?? {});

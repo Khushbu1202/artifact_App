@@ -1,3 +1,4 @@
+import 'package:firebase_app_check/firebase_app_check.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -10,10 +11,18 @@ import 'Provider_Data/handle_ai.dart';
 import 'Provider_Data/handle_local_data.dart';
 import 'Provider_Data/provider_data.dart';
 import 'Provider_Data/user_provider_count.dart';
+
 import 'Routes/roots.dart';
 import 'Routes/roots_name.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+
+  await Firebase.initializeApp();
+
+  await FirebaseAppCheck.instance.activate(
+    androidProvider: AndroidProvider.debug,
+  );
   ChangeNotifierProvider<AppStateNotifier>(create: (_) => AppStateNotifier());
   WidgetsFlutterBinding.ensureInitialized();
 
@@ -32,8 +41,10 @@ class ArtiFacts extends StatelessWidget {
     return Sizer(
       builder: (context, orientation, deviceType) {
         return UpgradeAlert(
-          // upgrader: Upgrader(dialogStyle: UpgradeDialogStyle.cupertino),
-          child: MultiProvider(
+
+            // upgrader: Upgrader(),
+            // dialogStyle: UpgradeDialogStyle.cupertino,
+            child: MultiProvider(
             providers: [
               ChangeNotifierProvider(create: (_) => BottomBarProvider()),
               ChangeNotifierProvider(create: (_) => AppStateNotifier()),

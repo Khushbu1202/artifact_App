@@ -134,7 +134,7 @@ class _OnBoardingGridViewState extends State<OnBoardingGridView> {
                                 height: 3.h,
                                 width: 15.w,
                                 decoration: BoxDecoration(
-                                  color: const Color.fromRGBO(255, 40, 125, 1),
+                                  color: ColorX.pinkX,
                                   borderRadius: BorderRadius.circular(10.w),
                                 ),
                                 margin: EdgeInsets.symmetric(
@@ -202,7 +202,7 @@ class _OnBoardingGridViewState extends State<OnBoardingGridView> {
                                 height: 3.h,
                                 width: 15.w,
                                 decoration: BoxDecoration(
-                                  color: const Color.fromRGBO(255, 40, 125, 1),
+                                  color: ColorX.pinkX,
                                   borderRadius: BorderRadius.circular(10.w),
                                 ),
                                 margin: EdgeInsets.symmetric(
@@ -274,7 +274,7 @@ class _OnBoardingGridViewState extends State<OnBoardingGridView> {
                                   height: 3.h,
                                   width: 15.w,
                                   decoration: BoxDecoration(
-                                    color: const Color.fromRGBO(255, 40, 125, 1),
+                                    color: ColorX.pinkX,
                                     borderRadius: BorderRadius.circular(10.w),
                                   ),
                                   margin: EdgeInsets.symmetric(
@@ -341,7 +341,7 @@ class _OnBoardingGridViewState extends State<OnBoardingGridView> {
                                   height: 3.h,
                                   width: 15.w,
                                   decoration: BoxDecoration(
-                                    color: const Color.fromRGBO(255, 40, 125, 1),
+                                    color: ColorX.pinkX,
                                     borderRadius: BorderRadius.circular(10.w),
                                   ),
                                   margin: EdgeInsets.symmetric(
@@ -414,7 +414,7 @@ class _OnBoardingGridViewState extends State<OnBoardingGridView> {
                                   height: 3.h,
                                   width: 15.w,
                                   decoration: BoxDecoration(
-                                    color: const Color.fromRGBO(255, 40, 125, 1),
+                                    color: ColorX.pinkX,
                                     borderRadius: BorderRadius.circular(10.w),
                                   ),
                                   margin: EdgeInsets.symmetric(
@@ -481,7 +481,7 @@ class _OnBoardingGridViewState extends State<OnBoardingGridView> {
                                   height: 3.h,
                                   width: 15.w,
                                   decoration: BoxDecoration(
-                                    color: const Color.fromRGBO(255, 40, 125, 1),
+                                    color: ColorX.pinkX,
                                     borderRadius: BorderRadius.circular(10.w),
                                   ),
                                   margin: EdgeInsets.symmetric(
@@ -554,7 +554,7 @@ class _OnBoardingGridViewState extends State<OnBoardingGridView> {
                                   height: 3.h,
                                   width: 15.w,
                                   decoration: BoxDecoration(
-                                    color: const Color.fromRGBO(255, 40, 125, 1),
+                                    color: ColorX.pinkX,
                                     borderRadius: BorderRadius.circular(10.w),
                                   ),
                                   margin: EdgeInsets.symmetric(
@@ -621,7 +621,7 @@ class _OnBoardingGridViewState extends State<OnBoardingGridView> {
                                   height: 3.h,
                                   width: 15.w,
                                   decoration: BoxDecoration(
-                                    color: const Color.fromRGBO(255, 40, 125, 1),
+                                    color: ColorX.pinkX,
                                     borderRadius: BorderRadius.circular(10.w),
                                   ),
                                   margin: EdgeInsets.symmetric(

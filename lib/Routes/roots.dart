@@ -19,7 +19,7 @@ class RouteGenerator {
     case RootsName.imageGeneratorScreen:
       return buildRoute(ImageGeneratorScreen(imgUrl: '', prompt: '',category: '',), settings: settings);
     case RootsName.detailImageGeneratedScreen:
-       return buildRoute(const DetailImageGeneratedScreen(), settings: settings);
+       return buildRoute(const DetailImageGeneratedScreen(image: '',), settings: settings);
 
       default:
         return _errorRoute();

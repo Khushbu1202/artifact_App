@@ -277,12 +277,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             print('absxhjabsInstance pi');
                             print(
                                 'obj${promptController.text + selectedItem.toString()}');
-                            // model.type = "";
-                            // model.getImagePost(promptController.text, selectedItem.toString(), context);
-                            // FirebaseAuth.instance.authStateChanges().listen((User? user){
-                            //   getUserDetails(user?.email.toString() ?? '');
-                            //   print('data show');
-                            // });
+                            model.type = "";
+                            model.getImagePost(promptController.text, selectedItem.toString(), context, data3!.count!);
+                            FirebaseAuth.instance.authStateChanges().listen((User? user){
+                              getUserDetails(user?.email.toString() ?? '');
+                              print('data show');
+                            });
                             Timer(const Duration(milliseconds: 1000), () {
                               int limit = data3!.plan=="nothing"?3 :data3!.plan=="Bronze"?100:data3!.plan=="Silver"?220:500;
                               if (data3!.count! < limit) {
@@ -318,7 +318,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         width: MediaQuery.of(context).size.width,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(40),
-                          color: const Color.fromRGBO(234, 72, 220, 1),
+                          color: ColorX.pinkX,
                         ),
                         child: Padding(
                           padding: EdgeInsets.all(1.8.h),
@@ -409,9 +409,9 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                       leading: Radio(
                         fillColor: MaterialStateColor.resolveWith(
-                                (states) => const Color.fromRGBO(234, 72, 220, 1)),
+                                (states) => ColorX.pinkX),
                         focusColor: MaterialStateColor.resolveWith(
-                                (states) => const Color.fromRGBO(234, 72, 220, 1)),
+                                (states) => ColorX.pinkX),
                         value: "Radio",
                         groupValue: '',
                         onChanged: (String? value) {

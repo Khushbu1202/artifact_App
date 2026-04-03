@@ -1,6 +1,7 @@
 import 'dart:async';
 import 'dart:io';
 
+import 'package:artifact/Routes/roots_name.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
@@ -18,7 +19,6 @@ import '../../../../Provider_Data/dark_mode.dart';
 import '../../../../Provider_Data/user_provider_count.dart';
 import '../../../../Utilities/app_color.dart';
 import '../../../../Utilities/constants.dart';
-import '../../Splash/splash_view.dart';
 
 class CategoryScreen extends StatefulWidget {
   final User? user;
@@ -35,13 +35,20 @@ class _CategoryScreenState extends State<CategoryScreen> {
   bool _switchValue4 = true;
 
   final Uri instaUrl = Uri.parse(
-      'https://www.instagram.com/kindlebit_solutions?igshid=OGQ5ZDc2ODk2ZA==');
-  // final Uri twitterUrl = Uri.parse('www.kindlebit.com');
-  final Uri fbUrl =
-  Uri.parse('https://www.facebook.com/profile.php?id=100094372151854');
+      'https://www.instagram.com/kk___0.02_/'
+  );
   final Uri youtubeUrl = Uri.parse(
       'https://www.youtube.com/@khushbudhatwalia');
-  final Uri linkedInUrl = Uri.parse('http://www.kindlebit.com/');
+  final Uri twitterUrl = Uri.parse(
+  'https://x.com/Khuhbu11'
+  );
+  final Uri fbUrl =
+  Uri.parse(
+      'https://www.facebook.com/profile.php?id=100094372151854'
+  );
+  final Uri linkedInUrl = Uri.parse(
+      'https://www.linkedin.com/in/khushbu-thakur-766b10286/'
+  );
 
   late StreamSubscription<List<PurchaseDetails>>? _subscription;
   final InAppPurchase _inAppPurchase = InAppPurchase.instance;
@@ -174,36 +181,83 @@ class _CategoryScreenState extends State<CategoryScreen> {
     return available;
   }
 
-  Future<void> getUserDetails(String email) async {
-    final DocumentReference userDocRef =
-    FirebaseFirestore.instance.collection('users').doc(email);
-    final DocumentSnapshot documentSnapshot = await userDocRef.get();
-    if (documentSnapshot.exists) {
-      data = documentSnapshot.data() as Map<String, dynamic>;
-      data2 = UserDetails.fromJson(data ?? {});
+  // Future<void> getUserDetails(String email) async {
+  //   final DocumentReference userDocRef =
+  //   FirebaseFirestore.instance.collection('users').doc(email);
+  //   final DocumentSnapshot documentSnapshot = await userDocRef.get();
+  //   if (documentSnapshot.exists) {
+  //     data = documentSnapshot.data() as Map<String, dynamic>;
+  //     data2 = UserDetails.fromJson(data ?? {});
+  //
+  //     setState(() {
+  //       updatecount = plan == "nothing"
+  //           ? 3 - data2.count
+  //           : plan == "Bronze"
+  //           ? 100 - data2.count
+  //           : plan == "Silver"
+  //           ? 220 - data2.count
+  //           : 500 - data2.count;
+  //       plan = data2.plan;
+  //       day_limit = data2.day_limit;
+  //       expiry = data2.expiry;
+  //       if (kDebugMode) {
+  //         print("khushbu======${data2.count}");
+  //       }else{
+  //         print("khushbu2-=======${data2.count}");
+  //       }
+  //       if (kDebugMode) {
+  //
+  //         print('bsxhjabs${userDocRef.get()}');
+  //
+  //         print("last count=======${updatecount.toString()}");
+  //       }
+  //     });
+  //   }
+  // }
 
-      setState(() {
-        updatecount = plan == "nothing"
-            ? 3 - data2.count
-            : plan == "Bronze"
-            ? 100 - data2.count
-            : plan == "Silver"
-            ? 220 - data2.count
-            : 500 - data2.count;
-        plan = data2.plan;
-        day_limit = data2.day_limit;
-        expiry = data2.expiry;
+
+  Future<void> getUserDetails(String email) async {
+    try {
+      final DocumentReference userDocRef =
+      FirebaseFirestore.instance.collection('users').doc(email);
+      final DocumentSnapshot documentSnapshot = await userDocRef.get();
+
+      if (documentSnapshot.exists) {
+        data = documentSnapshot.data() as Map<String, dynamic>;
+        data2 = UserDetails.fromJson(data ?? {});
+
+        setState(() {
+          updatecount = plan == "nothing"
+              ? 3 - data2.count
+              : plan == "Bronze"
+              ? 100 - data2.count
+              : plan == "Silver"
+              ? 220 - data2.count
+              : 500 - data2.count;
+          plan = data2.plan;
+          day_limit = data2.day_limit;
+          expiry = data2.expiry;
+
+          if (kDebugMode) {
+            print("khushbu======${data2.count}");
+            print("bsxhjabs$data"); // ✅ print actual Firestore data
+            print("last count=======${updatecount.toString()}");
+          } else {
+            print("khushbu-=======${data2.count}");
+          }
+        });
+      } else {
         if (kDebugMode) {
-          print("khushbu======${data2.count}");
-        }else{
-          print("khushbu-=======${data2.count}");
+          print("No document found for user: $email");
         }
-        if (kDebugMode) {
-          print("last count=======${updatecount.toString()}");
-        }
-      });
+      }
+    } catch (e) {
+      if (kDebugMode) {
+        print("Error fetching user details: $e");
+      }
     }
   }
+
 
   Future<void> updatePlan(plan) async {
     FirebaseAuth.instance.authStateChanges().listen((User? user) async {
@@ -211,6 +265,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
       FirebaseFirestore.instance.collection('users').doc(user?.email);
       await userDocRef.update({'plan': plan});
       await userDocRef.update({'count': 0});
+
+      final docSnap = await userDocRef.get();
+      if (docSnap.exists) {
+        print("User data: ${docSnap.data()}");
+      }
       getUserDetails(user!.email.toString());
     });
   }
@@ -220,8 +279,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
   Future<void> _handleSignOut() async {
     try {
       await _googleSignIn.signOut();
-      Navigator.of(context)
-          .push(MaterialPageRoute(builder: (context) => const SplashScreen()));
+      Navigator.of(context, rootNavigator: true)
+          .pushNamed(RootsName.splashScreen);
+      // Navigator.of(context).pushReplacementNamed();
+      // Navigator.of(context)
+      //     .push(MaterialPageRoute(builder: (context) => const SplashScreen()));
     } catch (error) {
       if (kDebugMode) {
         print('Error signing out: $error');
@@ -387,8 +449,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             borderRadius: BorderRadius.circular(30),
                             border: Border.all(
                                 color: _switchValue3 == true
-                                    ? const Color.fromRGBO(234, 72, 220, 1)
-                                    : const Color.fromRGBO(234, 72, 220, 1),
+                                    ? ColorX.pinkX
+                                    : ColorX.pinkX,
                                 width: 0.3.w),
                             color: themProvider.isDarkModeOn
                                 ? ColorX.blackX
@@ -399,7 +461,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             Icons.circle,
                             color: themProvider.isDarkModeOn
                                 ? ColorX.blackX
-                                : const Color.fromRGBO(234, 72, 220, 1),
+                                : ColorX.pinkX,
                             size: 1.5.h,
                           )
                               : null,
@@ -435,8 +497,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             borderRadius: BorderRadius.circular(30),
                             border: Border.all(
                                 color: _switchValue4 == true
-                                    ? const Color.fromRGBO(234, 72, 220, 1)
-                                    : const Color.fromRGBO(234, 72, 220, 1),
+                                    ? ColorX.pinkX
+                                    : ColorX.pinkX,
                                 width: 0.3.w),
                             color: themProvider.isDarkModeOn
                                 ? ColorX.blackX
@@ -446,7 +508,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                               ? Icon(
                             Icons.circle,
                             color: themProvider.isDarkModeOn
-                                ? const Color.fromRGBO(234, 72, 220, 1)
+                                ? ColorX.pinkX
                                 : Colors.transparent,
                             size: 1.5.h,
                           )
@@ -669,7 +731,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                             borderRadius: BorderRadius.circular(1.5.w),
                             image: const DecorationImage(
                               image: AssetImage(
-                                'image/Vector (1).png',
+                                'image/instagram.png',
                               ),
                               fit: BoxFit.cover,
                             ),
@@ -680,11 +742,11 @@ class _CategoryScreenState extends State<CategoryScreen> {
                         width: 2.w,
                       ),
                       GestureDetector(
-                        // onTap: () async {
-                        //   if (!await launchUrl(twitterUrl)) {
-                        //     throw Exception('Could not launch $twitterUrl');
-                        //   }
-                        // },
+                        onTap: () async {
+                          if (!await launchUrl(youtubeUrl)) {
+                            throw Exception('Could not launch $youtubeUrl');
+                          }
+                        },
                         child: Container(
                           height: 6.h,
                           width: 12.w,
@@ -695,7 +757,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                       : Colors.transparent),
                               borderRadius: BorderRadius.circular(1.10.w),
                               image: const DecorationImage(
-                                  image: AssetImage('image/Vector.png'),
+                                  image: AssetImage('image/youtube.png'),
                                   fit: BoxFit.cover)),
                         ),
                       ),
@@ -718,7 +780,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                       : Colors.transparent),
                               borderRadius: BorderRadius.circular(1.5.w),
                               image: const DecorationImage(
-                                  image: AssetImage('image/Group 18694.png'),
+                                  image: AssetImage('image/facebook.png'),
                                   fit: BoxFit.fill)),
                         ),
                       ),
@@ -727,8 +789,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
                       ),
                       GestureDetector(
                         onTap: () async {
-                          if (!await launchUrl(youtubeUrl)) {
-                            throw Exception('Could not launch $youtubeUrl');
+                          if (!await launchUrl(twitterUrl)) {
+                            throw Exception('Could not launch $twitterUrl');
                           }
                         },
                         child: Container(
@@ -741,7 +803,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                       : Colors.transparent),
                               borderRadius: BorderRadius.circular(1.5.w),
                               image: const DecorationImage(
-                                  image: AssetImage('image/Group 18693.png'),
+                                  image: AssetImage('image/twitter.png'),
                                   fit: BoxFit.cover)),
                         ),
                       ),
@@ -764,7 +826,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                       : Colors.transparent),
                               borderRadius: BorderRadius.circular(1.5.w),
                               image: const DecorationImage(
-                                  image: AssetImage('image/Vector (2).png'),
+                                  image: AssetImage('image/linkdin.png'),
                                   fit: BoxFit.cover)),
                         ),
                       ),
@@ -834,7 +896,8 @@ class _CategoryScreenState extends State<CategoryScreen> {
     }
   }
 
-  void _showModalSheet() {
+  void _showModalSheet()
+  {
     showModalBottomSheet(
         context: context,
         shape: RoundedRectangleBorder(
@@ -852,7 +915,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                   child: Column(
                     children: [
                       const SizedBox(
-                        height: 10,
+                        height: 4,
                       ),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.end,
@@ -867,7 +930,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                 Padding(
                                   padding: const EdgeInsets.all(4.0),
                                   child: Container(
-                                    height: 25,
+                                    height: 23,
                                     width: 25,
                                     decoration: BoxDecoration(
                                       borderRadius: BorderRadius.circular(20),
@@ -1052,7 +1115,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                         ),
                                       ),
                                       const SizedBox(
-                                        height: 3,
+                                        height: 2,
                                       ),
                                       Padding(
                                         padding:
@@ -1130,7 +1193,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
                                         ),
                                       ),
                                       const SizedBox(
-                                        height: 5,
+                                        height: 4,
                                       ),
                                       Padding(
                                         padding:
